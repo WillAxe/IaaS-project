@@ -1,0 +1,1 @@
+CREATE TABLE Users(id serial PRIMARY KEY, User_Password text NOT NULL, User_Email text UNIQUE NOT NULL, User_Experience text, User_Education text);
