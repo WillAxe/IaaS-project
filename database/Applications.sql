@@ -1,4 +1,11 @@
-CREATE TABLE Applications(id serial PRIMARY KEY, Status text default 'Not Applied', Application_Date date NOT NULL DEFAULT NOW(), User_id INT REFERENCES Users(id), Job_id INT REFERENCES Job_Posts(job_id));
+CREATE TABLE Applications (
+    application_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES Users(user_id),
+    job_id INTEGER REFERENCES Job_Posts(job_id),
+    status VARCHAR(255) DEFAULT 'Pending' NOT NULL,
+    application_date DATE DEFAULT CURRENT_DATE
+);
+
 
 -- Rember to create the tables for users and Job_Posts before creating Applications table
 
