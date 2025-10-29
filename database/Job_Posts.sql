@@ -5,5 +5,5 @@ CREATE TABLE Job_Posts (
     job_role VARCHAR(255),
     job_description TEXT,
     company_name VARCHAR(255),
-    posted_date DATE DEFAULT CURRENT_DATE
+    posted_date DATE DEFAULT NOW()
 );
