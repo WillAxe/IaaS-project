@@ -14,16 +14,13 @@ function getAllUsers() {
 //Post call for creating a new user in the database
 function createUser({ user_name, User_Password, User_Email }) {
   return new Promise((resolve, reject) => {
+    const values = [user_name, User_Password, User_Email]
     const query =
-      "INSERT INTO Users(user_name, User_Password, User_Email) VALUES ($1, $2, $,3) RETURNING *"
-    connectionString.query(
-      query,
-      [user_name, User_Password, User_Email],
-      (error) => {
-        if (error) reject(error)
-        else resolve()
-      }
-    )
+      "INSERT INTO Users (user_name, User_Password, User_Email) VALUES ($1, $2, $3) RETURNING *"
+    connectionString.query(query, values, (error) => {
+      if (error) reject(error)
+      else resolve()
+    })
   })
 }
 
