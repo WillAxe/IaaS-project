@@ -11,6 +11,13 @@ app.use(express.urlencoded({ extended: true }))
 
 path = require("path")
 
+app.get("/", (req, res) => {
+  res.send("Welcome to JobMatch API")
+})
+
+const planetRoutes = require("./routes/userRoutes")
+app.use("/jobmatch", userRoutes)
+
 //Routes for Users
 app.use("/jobmatch", require("./routes/userRoutes"))
 
