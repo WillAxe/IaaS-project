@@ -13,8 +13,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //Routes for Users
-// const userRoute = require("./routes/userRoutes")
-// app.use("/jobmatch", userRoute)
+const userRoute = require("./routes/userRoutes")
+app.use("/jobmatch", userRoute)
 
 app.use(express.static(path.join(path.resolve(), "dist")))
-app.listen(console.log("Server is running on port", port))
+app.listen(3000, () => {})

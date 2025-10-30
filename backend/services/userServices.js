@@ -3,7 +3,7 @@ const connectionString = require("../database-connection/connectionPostgres")
 //Function to get all users from the database
 function getAllUsers() {
   return new Promise((resolve, reject) => {
-    const query = "SELECT * FROM Users"
+    const query = "SELECT * FROM Users;"
     connectionString.query(query, (error, results) => {
       if (error) reject(error)
       else resolve(results.rows)
