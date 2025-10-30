@@ -13,17 +13,19 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //Routes for Users
-// const userRoute = require("./routes/userRoutes")
-// app.use("/jobmatch", userRoute)
+const userRoute = require("./routes/userRoutes")
+app.use("/jobmatch", userRoute)
+
+//Routes for Jobs
+app.use("/jobmatch", require("./routes/JobRoutes"))
 
 app.use(express.static(path.join(path.resolve(), "dist")))
+
 app.listen(3000, () => {
   console.log('Redo på http://localhost:3000/')
 })
 
 
-//Routes for Jobs
-app.use("/jobmatch", require("./routes/JobRoutes"))
 
 
 
