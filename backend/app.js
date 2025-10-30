@@ -1,4 +1,5 @@
-require("dotenv").config()
+const dotenv=require("dotenv")
+dotenv.config()
 const express = require("express")
 const app = express()
 const cors = require("cors")
@@ -23,3 +24,10 @@ app.use("/jobmatch", require("./routes/userRoutes"))
 
 app.use(express.static(path.join(path.resolve(), "dist")))
 app.listen(console.log("Server is running on port", port))
+
+
+//Routes for Jobs
+app.use("/jobmatch", require("./routes/JobRoutes"))
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`)
+})
