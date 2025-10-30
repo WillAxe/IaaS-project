@@ -17,11 +17,13 @@ app.use(express.urlencoded({ extended: true }))
 // app.use("/jobmatch", userRoute)
 
 app.use(express.static(path.join(path.resolve(), "dist")))
-app.listen(console.log("Server is running on port", port))
+app.listen(3000, () => {
+  console.log('Redo på http://localhost:3000/')
+})
 
 
 //Routes for Jobs
 app.use("/jobmatch", require("./routes/JobRoutes"))
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
-})
+
+
+
