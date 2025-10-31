@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./createAccount.jsx";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ function LoginPage() {
       }
 
       const data = await response.json();
-      alert(`Välkommen, ${data.user?.name || "användare"}!`);
+      console.log("Inloggad användare:", data);
     } catch (error) {
       alert("Inloggning misslyckades. Kontrollera dina uppgifter.");
       console.error("Login error:", error);
@@ -138,18 +138,13 @@ function LoginPage() {
           </button>
         </form>
 
-        <p
-          style={{
-            textAlign: "center",
-            marginTop: "1.5rem",
-            fontSize: "0.9rem",
-          }}
-        >
+        <p style={{ textAlign: "center", marginTop: "1.5rem", fontSize: "0.9rem" }}>
           Har du inget konto?{" "}
-          <a href="./createAccount" style={{ color: "#2563eb", fontWeight: 600 }}>
-            Registrera dig här
-          </a>
-        </p>
+          <Link to="/createAccount" style={{ color: "#2563eb", fontWeight: 600 }}>
+          Registrera dig här
+          </Link>
+          </p>
+
       </div>
     </div>
   );
