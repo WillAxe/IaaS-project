@@ -21,9 +21,9 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
-  const { user_name, User_Password, User_Email } = req.body
+  const { user_name, user_password, user_mail } = req.body
   try {
-    await userServices.createUser({ user_name, User_Password, User_Email })
+    await userServices.createUser({ user_name, user_password, user_mail })
     return res
       .status(201)
       .json({ sucess: true, message: "User created successfully" })
@@ -33,9 +33,9 @@ exports.createUser = async (req, res) => {
 }
 
 exports.loginUser = async (req, res) => {
-  const { User_Email, User_Password } = req.body
+  const { user_mail, user_password } = req.body
   try {
-    const user = await userServices.loginUser(User_Email, User_Password)
+    const user = await userServices.loginUser(user_mail, user_password)
     if (!user) {
       return res.status(401).json({ error: "Invalid email or password" })
     } else {
@@ -65,10 +65,10 @@ exports.deleteUserById = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params
-    const { user_name, User_Email } = req.body
+    const { user_name, user_mail } = req.body
     const updated = await userServices.updateUser(id, {
       user_name,
-      User_Email,
+      user_mail,
     })
     res.json({ message: updated })
   } catch (error) {
