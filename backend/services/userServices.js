@@ -14,9 +14,9 @@ function getAllUsers() {
 function getUserById(id) {
   return new Promise((resolve, reject) => {
     const query = "SELECT * FROM Users WHERE id = $1;"
-    connectionString.query(query, { id }, (error, results) => {
+    connectionString.query(query, [id], (error, results) => {
       if (error) reject(error)
-      else resolve(results)
+      else resolve(results.rows[0])
     })
   })
 }
@@ -66,12 +66,12 @@ function deleteUserById(id) {
 
 function updateUser(id, { user_name, User_Email }) {
   return new Promise((resolve, reject) => {
-    const values = [user_name, User_Email]
+    const values = [user_name, User_Email, id]
     const query =
       "UPDATE Users SET user_name = $1, User_Email = $2 WHERE id = $3;"
-    connectionString.qquery(query, [values, id], (error, results) => {
+    connectionString.query(query, values, (error, results) => {
       if (error) reject(error)
-      else resolve(results.rows)
+      else resolve("User updated successfully")
     })
   })
 }
