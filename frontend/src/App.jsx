@@ -1,6 +1,6 @@
-// import { useState } from "react"
 import "./App.css"
-import Welcome from "./components/welcome"
+import LoginPage from "./components/Welcomepage/welcome"
+import CreateAccount from "./components/Welcomepage/createAccount"
 
 import {
   createHashRouter,
@@ -11,7 +11,10 @@ import {
 function App() {
   const router = createHashRouter([
     {
-      children: [{ element: <Welcome />, path: "/" }],
+      children: [
+        { element: <LoginPage />, path: "/" },
+        { element: <CreateAccount />, path: "/createAccount" },
+      ],
       element: (
         <>
           <nav>
@@ -19,6 +22,7 @@ function App() {
               <li>
                 <Link to="/">Home</Link>
               </li>
+              <Link to="/createAccount">createAccount</Link>
             </ul>
           </nav>
           <main>
