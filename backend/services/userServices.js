@@ -13,7 +13,7 @@ function getAllUsers() {
 
 function getUserById(id) {
   return new Promise((resolve, reject) => {
-    const query = "SELECT * FROM Users WHERE id = $1;"
+    const query = "SELECT * FROM Users WHERE user_id = $1;"
     connectionString.query(query, [id], (error, results) => {
       if (error) reject(error)
       else resolve(results.rows[0])
@@ -38,7 +38,7 @@ function createUser({ user_name, user_password, user_mail }) {
 function loginUser(user_mail, user_password) {
   return new Promise((resolve, reject) => {
     const query =
-      "SELECT * FROM Users WHERE user_mail = $1 AND User-Password = $2;"
+      "SELECT * FROM Users WHERE user_mail = $1 AND user-password = $2;"
     connectionString.query(
       query,
       [user_mail, user_password],
@@ -56,7 +56,7 @@ function loginUser(user_mail, user_password) {
 
 function deleteUserById(id) {
   return new Promise((resolve, reject) => {
-    const query = "DELETE FROM Users WHERE id = $1;"
+    const query = "DELETE FROM Users WHERE user_id = $1;"
     connectionString.query(query, [id], (error) => {
       if (error) reject(error)
       else resolve()
@@ -68,7 +68,7 @@ function updateUser(id, { user_name, user_mail }) {
   return new Promise((resolve, reject) => {
     const values = [user_name, user_mail, id]
     const query =
-      "UPDATE Users SET user_name = $1, user_mail = $2 WHERE id = $3;"
+      "UPDATE Users SET user_name = $1, user_mail = $2 WHERE user_id = $3;"
     connectionString.query(query, values, (error, results) => {
       if (error) reject(error)
       else resolve("User updated successfully")
