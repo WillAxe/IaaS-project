@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/jobmatch/users/:id", {
-        method: "GET",
+      const response = await fetch("http://localhost:3000/jobmatch/login", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ user_mail: email, user_password: password }),
       });
 
       if (!response.ok) {
@@ -21,6 +22,7 @@ function LoginPage() {
 
       const data = await response.json();
       console.log("Inloggad användare:", data);
+      navigate ("/homePage"); 
     } catch (error) {
       alert("Inloggning misslyckades. Kontrollera dina uppgifter.");
       console.error("Login error:", error);
