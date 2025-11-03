@@ -1,1 +1,1 @@
-CREATE TABLE Users(user_id serial PRIMARY KEY, user_name text NOT NULL, user_password text NOT NULL, user_email text UNIQUE NOT NULL, user_experience text, user_education text);
+CREATE TABLE Users(user_id serial PRIMARY KEY, user_name text NOT NULL, user_password text NOT NULL, user_mail text UNIQUE NOT NULL, user_experience text, user_education text);
