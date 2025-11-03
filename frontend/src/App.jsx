@@ -1,6 +1,7 @@
 import "./App.css"
 import LoginPage from "./components/Welcomepage/welcome"
 import CreateAccount from "./components/Welcomepage/createAccount"
+import HomePage from "./components/Homepage/homePage"
 
 import {
   createHashRouter,
@@ -14,6 +15,7 @@ function App() {
       children: [
         { element: <LoginPage />, path: "/" },
         { element: <CreateAccount />, path: "/createAccount" },
+        { element: <HomePage />, path: "/homePage" },
       ],
       element: (
         <>
@@ -22,7 +24,9 @@ function App() {
               <li>
                 <Link to="/">Home</Link>
               </li>
+              <li>
               <Link to="/createAccount">createAccount</Link>
+              </li>
             </ul>
           </nav>
           <main>
