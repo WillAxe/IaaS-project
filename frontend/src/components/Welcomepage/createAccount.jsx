@@ -1,7 +1,9 @@
 import React from "react"
-import { useState, useEffect } from "react"
+import { useState, _useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
-function createAccount() {
+function CreateAccount() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,18 +19,33 @@ function createAccount() {
     console.log(formData)
 
     try {
+      // map frontend form keys to backend expected keys
+      const payload = {
+        user_name: formData.name,
+        user_mail: formData.email,
+        user_password: formData.password,
+      }
+
       const response = await fetch("/jobmatch/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       })
       if (response.ok) {
-        alert("Konto skapat!")
         setFormData({ name: "", email: "", password: "" })
+        navigate("/homePage")
       } else {
-        alert("Något gick fel vid skapandet av kontot.")
+        // show server response message when available
+        let msg = "Något gick fel vid skapandet av kontot."
+        try {
+          const body = await response.json()
+          if (body && body.error) msg = body.error
+        } catch {
+          msg
+        }
+        alert(msg)
       }
     } catch (error) {
       console.error("Fel:", error)
@@ -78,4 +95,4 @@ function createAccount() {
     </>
   )
 }
-export default createAccount
+export default CreateAccount
