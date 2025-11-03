@@ -24,9 +24,6 @@ function App() {
               <li>
                 <Link to="/">Home</Link>
               </li>
-              <li>
-              <Link to="/createAccount">createAccount</Link>
-              </li>
             </ul>
           </nav>
           <main>
