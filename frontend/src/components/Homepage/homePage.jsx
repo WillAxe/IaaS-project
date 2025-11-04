@@ -51,7 +51,7 @@ function HomePage() {
         <nav style={navbarStyle}>
           <div style={containerStyle}>
             <Link
-              to="/homePage/:userid"
+              to="/homepage/:userid"
               style={logoStyle}
               onMouseOver={(e) => (e.target.style.color = "#1e40af")}
               onMouseOut={(e) => (e.target.style.color = "#2563eb")}
@@ -60,7 +60,7 @@ function HomePage() {
             </Link>
             <div style={linksContainer}>
               <Link
-                to="/profilePage"
+                to="/profilepage"
                 style={linkStyle}
                 onMouseOver={(e) => (e.target.style.color = "#2563eb")}
                 onMouseOut={(e) => (e.target.style.color = "#333")}

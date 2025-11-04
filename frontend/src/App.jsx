@@ -21,15 +21,11 @@ function App() {
         { element: <HomePage />, path: "/homePage/:userid" },
         { element: <MyApplications />, path: "/applications/:userid" },
         { element: <ProfilePage />, path: "/profilePage" },
-
-  
       ],
       element: (
         <>
           <nav>
-            <ul>
-
-            </ul>
+            <ul></ul>
           </nav>
           <main>
             <Outlet></Outlet>
