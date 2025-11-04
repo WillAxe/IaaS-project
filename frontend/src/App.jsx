@@ -3,6 +3,7 @@ import LoginPage from "./components/Welcomepage/welcome"
 import CreateAccount from "./components/Welcomepage/createAccount"
 import HomePage from "./components/Homepage/homePage"
 import MyApplications from "./components/Homepage/myApplications"
+import ProfilePage from "./components/Homepage/profilePage"
 
 import {
   createHashRouter,
@@ -19,14 +20,15 @@ function App() {
         { element: <CreateAccount />, path: "/createAccount" },
         { element: <HomePage />, path: "/homePage/:userid" },
         { element: <MyApplications />, path: "/applications/:userid" },
+        { element: <ProfilePage />, path: "/profilePage" },
+
+  
       ],
       element: (
         <>
           <nav>
             <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
+
             </ul>
           </nav>
           <main>
