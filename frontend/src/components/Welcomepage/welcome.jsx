@@ -1,31 +1,32 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate()
 
   async function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
       const response = await fetch("http://localhost:3000/jobmatch/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_mail: email, user_password: password }),
-      });
+      })
 
       if (!response.ok) {
-        throw new Error("Fel inloggningsuppgifter");
+        throw new Error("Fel inloggningsuppgifter")
       }
 
-      const data = await response.json();
-      console.log("Inloggad användare:", data);
-      navigate ("/homePage"); 
+      const data = await response.json()
+      console.log("Inloggad användare:", data)
+      let userId = data.user_id
+      navigate(`/homePage/${userId}`)
     } catch (error) {
-      alert("Inloggning misslyckades. Kontrollera dina uppgifter.");
-      console.error("Login error:", error);
+      alert("Inloggning misslyckades. Kontrollera dina uppgifter.")
+      console.error("Login error:", error)
     }
   }
 
@@ -34,7 +35,7 @@ function LoginPage() {
       style={{
         minHeight: "100vh",
         margin: 0,
-        width: "100vw",                
+        width: "100vw",
         background: "linear-gradient(135deg, #2563eb, #60a5fa)",
         display: "flex",
         flexDirection: "column",
@@ -51,8 +52,8 @@ function LoginPage() {
           color: "#333",
           borderRadius: "12px",
           padding: "3rem",
-          width: "100%",               
-          maxWidth: "500px",            
+          width: "100%",
+          maxWidth: "500px",
           boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
         }}
       >
@@ -63,7 +64,7 @@ function LoginPage() {
             marginBottom: "2rem",
           }}
         >
-           Välkommen till JobMatch
+          Välkommen till JobMatch
         </h1>
 
         <form
@@ -77,7 +78,11 @@ function LoginPage() {
           <div>
             <label
               htmlFor="email"
-              style={{ display: "block", marginBottom: "0.5rem", fontWeight: 600 }}
+              style={{
+                display: "block",
+                marginBottom: "0.5rem",
+                fontWeight: 600,
+              }}
             >
               E-post
             </label>
@@ -100,7 +105,11 @@ function LoginPage() {
           <div>
             <label
               htmlFor="password"
-              style={{ display: "block", marginBottom: "0.5rem", fontWeight: 600 }}
+              style={{
+                display: "block",
+                marginBottom: "0.5rem",
+                fontWeight: 600,
+              }}
             >
               Lösenord
             </label>
@@ -140,16 +149,24 @@ function LoginPage() {
           </button>
         </form>
 
-        <p style={{ textAlign: "center", marginTop: "1.5rem", fontSize: "0.9rem" }}>
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "1.5rem",
+            fontSize: "0.9rem",
+          }}
+        >
           Har du inget konto?{" "}
-          <Link to="/createAccount" style={{ color: "#2563eb", fontWeight: 600 }}>
-          Registrera dig här
+          <Link
+            to="/createAccount"
+            style={{ color: "#2563eb", fontWeight: 600 }}
+          >
+            Registrera dig här
           </Link>
-          </p>
-
+        </p>
       </div>
     </div>
-  );
+  )
 }
 
-export default LoginPage;
+export default LoginPage

@@ -26,7 +26,7 @@ function CreateAccount() {
         user_password: formData.password,
       }
 
-      const response = await fetch("/jobmatch/users", {
+      const response = await fetch("http://localhost:3000/jobmatch/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,10 +34,12 @@ function CreateAccount() {
         body: JSON.stringify(payload),
       })
       if (response.ok) {
+        const data = await response.json()
+        console.log(data.user_id)
+        let userId = data.user_id
         setFormData({ name: "", email: "", password: "" })
-        navigate("/homePage")
+        navigate(`/homePage/${userId}`)
       } else {
-        // show server response message when available
         let msg = "Något gick fel vid skapandet av kontot."
         try {
           const body = await response.json()

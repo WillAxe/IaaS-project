@@ -23,10 +23,18 @@ exports.getUserById = async (req, res) => {
 exports.createUser = async (req, res) => {
   const { user_name, user_password, user_mail } = req.body
   try {
-    await userServices.createUser({ user_name, user_password, user_mail })
-    return res
-      .status(201)
-      .json({ sucess: true, message: "User created successfully" })
+    const newUser = await userServices.createUser({
+      user_name,
+      user_password,
+      user_mail,
+    })
+    // return the created row and include a user_id alias for frontend compatibility
+    return res.status(201).json({
+      success: true,
+      data: newUser,
+      user_id: newUser.user_id,
+      message: "User created successfully",
+    })
   } catch (error) {
     res.status(500).json({ error: "Error creating user" })
   }
@@ -42,7 +50,7 @@ exports.loginUser = async (req, res) => {
       res.status(200).json({
         success: true,
         message: "Login successful",
-        id: user.user_id,
+        user_id: user.user_id,
         user_name: user.user_name,
       })
     }

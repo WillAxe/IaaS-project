@@ -13,7 +13,7 @@ function getAllUsers() {
 
 function getUserById(id) {
   return new Promise((resolve, reject) => {
-    const query = "SELECT * FROM Users WHERE user_id = $1;"
+    const query = "SELECT * FROM Users WHERE id = $1;"
     connectionString.query(query, [id], (error, results) => {
       if (error) reject(error)
       else resolve(results.rows[0])
@@ -27,9 +27,9 @@ function createUser({ user_name, user_password, user_mail }) {
     const values = [user_name, user_password, user_mail]
     const query =
       "INSERT INTO Users (user_name, user_password, user_mail) VALUES ($1, $2, $3) RETURNING *"
-    connectionString.query(query, values, (error) => {
+    connectionString.query(query, values, (error, result) => {
       if (error) reject(error)
-      else resolve()
+      else resolve(result.rows[0])
     })
   })
 }
@@ -45,9 +45,9 @@ function loginUser(user_mail, user_password) {
       (error, results) => {
         if (error) reject(error)
         else if (results.rows.length === 0) {
-          resolve() // User not found
+          resolve()
         } else {
-          resolve(results.rows[0]) // User found
+          resolve(results.rows[0])
         }
       }
     )
@@ -56,7 +56,7 @@ function loginUser(user_mail, user_password) {
 
 function deleteUserById(id) {
   return new Promise((resolve, reject) => {
-    const query = "DELETE FROM Users WHERE user_id = $1;"
+    const query = "DELETE FROM Users WHERE id = $1;"
     connectionString.query(query, [id], (error) => {
       if (error) reject(error)
       else resolve()
@@ -64,14 +64,14 @@ function deleteUserById(id) {
   })
 }
 
-function updateUser(id, { user_name, user_mail }) {
+function updateUser(id, { user_name, user_email }) {
   return new Promise((resolve, reject) => {
-    const values = [user_name, user_mail, id]
+    const values = [user_name, user_email, id]
     const query =
-      "UPDATE Users SET user_name = $1, user_mail = $2 WHERE user_id = $3;"
+      "UPDATE Users SET user_name = $1, user_email = $2 WHERE id = $3 RETURNING *;"
     connectionString.query(query, values, (error, results) => {
       if (error) reject(error)
-      else resolve("User updated successfully")
+      else resolve(results.rows[0])
     })
   })
 }
