@@ -72,10 +72,7 @@ function HomePage() {
         </nav>
       </div>
 
-      <header>
-        <h1>Home Page</h1>
-        <p>Welcome to the Home Page!</p>
-      </header>
+     
       <main>
         <section className="job-postings">
           {jobPost.map((jobPost) => (
