@@ -20,7 +20,7 @@ function App() {
         { element: <CreateAccount />, path: "/createAccount" },
         { element: <HomePage />, path: "/homePage/:userid" },
         { element: <MyApplications />, path: "/applications/:userid" },
-        { element: <ProfilePage />, path: "/profilePage" },
+        { element: <ProfilePage />, path: "/profilePage/:userid" },
       ],
       element: (
         <>

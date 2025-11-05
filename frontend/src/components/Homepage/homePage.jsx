@@ -60,13 +60,23 @@ function HomePage() {
             </Link>
             <div style={linksContainer}>
               <Link
-                to="/profilepage"
+                to="/profilePage/:userid"
                 style={linkStyle}
                 onMouseOver={(e) => (e.target.style.color = "#2563eb")}
                 onMouseOut={(e) => (e.target.style.color = "#333")}
               >
                 Profil
               </Link>
+              <div style={linksContainer}>
+              <Link
+                to="/"
+                style={linkStyle}
+                onMouseOver={(e) => (e.target.style.color = "#2563eb")}
+                onMouseOut={(e) => (e.target.style.color = "#333")}
+              >
+                Logga ut
+              </Link>
+              </div>
             </div>
           </div>
         </nav>
