@@ -1,0 +1,37 @@
+.navbarStyle {
+  background-color: lightblue;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 12px 24px;
+}
+
+.containerStyle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.linksContainer {
+  display: flex;
+  gap: 24px;
+}
+
+.logoStyle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.linkStyle {
+  color: #333;
+  text-decoration: none;
+  font-weight: 50;
+}
+
+.job-postings {
+  display: flex;
+  background-color: #feefee;
+  flex-direction: column;
+}
