@@ -23,6 +23,7 @@ function LoginPage() {
       const data = await response.json()
       console.log("Inloggad användare:", data)
       let userId = data.user_id
+      localStorage.setItem("userId", userId)
       navigate(`/homePage/${userId}`)
     } catch (error) {
       alert("Inloggning misslyckades. Kontrollera dina uppgifter.")

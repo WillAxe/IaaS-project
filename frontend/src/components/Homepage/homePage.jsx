@@ -3,8 +3,11 @@ import { useState, useEffect } from "react"
 import "./styles/homePage.css"
 import LinkTo from "./linkTo"
 
+
+
 function HomePage() {
   const [jobPost, setJobPost] = useState([])
+  const userId = localStorage.getItem("userId")
   useEffect(() => {
     fetch("/jobmatch/jobs")
       .then((response) => response.json())
@@ -53,7 +56,7 @@ function HomePage() {
         <nav className="navbarStyle">
           <div className="containerStyle">
             <Link
-              to="/homepage/:userid"
+              to={`/homePage/${userId}`}
               className="logoStyle"
               onMouseOver={(e) => (e.target.style.color = "#1e40af")}
               onMouseOut={(e) => (e.target.style.color = "#2563eb")}
@@ -62,7 +65,7 @@ function HomePage() {
             </Link>
             <div className="linksContainer">
               <Link
-                to="/profilePage/:userid"
+                to= {`/profilePage/${userId}`}
                 className="linkStyle"
                 onMouseOver={(e) => (e.target.style.color = "#2563eb")}
                 onMouseOut={(e) => (e.target.style.color = "#333")}
