@@ -68,11 +68,7 @@ function updateUser(id, { user_name, user_mail }) {
   return new Promise((resolve, reject) => {
     const values = [user_name, user_mail, id]
     const query =
-<<<<<<< HEAD
-      "UPDATE Users SET user_name = $1, user_mail = $2 WHERE user_id = $3 RETURNING *;"
-=======
       "UPDATE Users SET user_name = $1, user_email = $2 WHERE user_id = $3 RETURNING *;"
->>>>>>> main
     connectionString.query(query, values, (error, results) => {
       if (error) reject(error)
       else resolve(results.rows[0])
