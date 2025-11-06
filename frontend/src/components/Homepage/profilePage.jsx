@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function ProfilePage() {
-  const [experiences, setExperiences] = useState([]);
+function ProfilePage() {
+  const [experiences, setExperiences] = useState(() => {
+    const savedExperiences = localStorage.getItem("experiences");
+    return savedExperiences ? JSON.parse(savedExperiences) : [];
+  });
+  
   const [form, setForm] = useState({
     company: "",
     title: "",
     years: "",
   });
+
+  // useEffect(() => {
+  //   const savedExperiences = localStorage.getItem("experiences");
+  //   if (savedExperiences) {
+  //     setExperiences(JSON.parse(savedExperiences));
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    localStorage.setItem("experiences", JSON.stringify(experiences));
+  }, [experiences]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -59,3 +74,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+export default ProfilePage;
