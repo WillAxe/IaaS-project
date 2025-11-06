@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
 function ProfilePage() {
-  const [experiences, setExperiences] = useState(() => {
+  const userId = localStorage.getItem("userId");
+   const [experiences, setExperiences] = useState(() => {
     const savedExperiences = localStorage.getItem("experiences");
     return savedExperiences ? JSON.parse(savedExperiences) : [];
   });
@@ -11,6 +12,28 @@ function ProfilePage() {
     title: "",
     years: "",
   });
+
+  
+  
+  useEffect(() => {
+    if (!userId) return; 
+
+    const fetchExperiences = async () => {
+      try {
+        const res = await fetch(`/jobmatch/user/${userId}`);
+        const data = await res.json();
+
+        if (data.user?.user_experience) {
+          setExperiences(data.user.user_experience); 
+          localStorage.setItem("experiences", JSON.stringify(data.user.user_experience));
+        }
+      } catch (error) {
+        console.error("Fel vid hämtning av erfarenheter:", error);
+      }
+    };
+
+    fetchExperiences();
+  }, [userId]);
 
   // useEffect(() => {
   //   const savedExperiences = localStorage.getItem("experiences");
@@ -27,11 +50,23 @@ function ProfilePage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const addExperience = () => {
+  const addExperience = async() => {
     if (!form.company || !form.title || !form.years) return;
-    setExperiences([...experiences, form]);
-    setForm({ company: "", title: "", years: "" });
+     const updatedExperiences = [...experiences, form];
+     setExperiences(updatedExperiences);
+     setForm({ company: "", title: "", years: "" });
+    try {
+      await fetch(`http://localhost:3000/jobmatch/user/${userId}/experience`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ experience: updatedExperiences }),
+      });
+    } catch (error) {
+      console.error("Kunde inte uppdatera erfarenheter i databasen:", error);
+    }
   };
+
+  
 
   return (
     <div style={{ maxWidth: 600, margin: "2rem auto", fontFamily: "Arial" }}>
