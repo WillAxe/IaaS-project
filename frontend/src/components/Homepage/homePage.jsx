@@ -3,8 +3,6 @@ import { useState, useEffect } from "react"
 import "./styles/homePage.css"
 import LinkTo from "./linkTo"
 
-
-
 function HomePage() {
   const [jobPost, setJobPost] = useState([])
   const userId = localStorage.getItem("userId")
@@ -65,7 +63,7 @@ function HomePage() {
             </Link>
             <div className="linksContainer">
               <Link
-                to= {`/profilePage/${userId}`}
+                to={`/profilePage/${userId}`}
                 className="linkStyle"
                 onMouseOver={(e) => (e.target.style.color = "#2563eb")}
                 onMouseOut={(e) => (e.target.style.color = "#333")}
@@ -73,14 +71,14 @@ function HomePage() {
                 Profil
               </Link>
               <div className="linkContainer">
-              <Link
-                to="/"
-                className="linkStyle"
-                onMouseOver={(e) => (e.target.style.color = "#2563eb")}
-                onMouseOut={(e) => (e.target.style.color = "#333")}
-              >
-                Logga ut
-              </Link>
+                <Link
+                  to="/"
+                  className="linkStyle"
+                  onMouseOver={(e) => (e.target.style.color = "#2563eb")}
+                  onMouseOut={(e) => (e.target.style.color = "#333")}
+                >
+                  Logga ut
+                </Link>
               </div>
             </div>
           </div>
@@ -96,7 +94,9 @@ function HomePage() {
               <p className="company">{`${jobPost.company_name}`}</p>
               <p className="job-description">{`${jobPost.job_description}`}</p>
               <p className="post-date">{`${jobPost.posted_date}`}</p>
-              <LinkTo body={jobPost} bodies="jobs"></LinkTo>
+
+              {/* let each post be a specfiic body and subpage in bodies*/}
+              <LinkTo body={jobPost} bodies="jobpost"></LinkTo>
             </div>
           ))}
         </section>
