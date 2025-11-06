@@ -87,6 +87,7 @@ function HomePage() {
 
       <main>
         <section className="job-postings">
+          {/* let each post be a specfiic body and link to a subpage to /jobpost*/}
           {jobPost.map((jobPost) => (
             <div className="post" key={jobPost.job_id}>
               <h2 className="headline">{`${jobPost.job_title}`}</h2>
@@ -95,8 +96,9 @@ function HomePage() {
               <p className="job-description">{`${jobPost.job_description}`}</p>
               <p className="post-date">{`${jobPost.posted_date}`}</p>
 
-              {/* let each post be a specfiic body and subpage in bodies*/}
-              <LinkTo body={jobPost} bodies="jobpost"></LinkTo>
+              <button className="apply-button">
+                <LinkTo body={jobPost} bodies="jobpost"></LinkTo>
+              </button>
             </div>
           ))}
         </section>
