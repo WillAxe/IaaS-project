@@ -7,7 +7,8 @@ router.get(
   "/applications/:applicationid",
   applicationController.getApplicationById
 )
-
 router.get("/applicationuser", applicationController.getUsersApplications)
+
+router.post("/applications", applicationController.sendApplication)
 
 module.exports = router

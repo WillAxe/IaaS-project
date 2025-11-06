@@ -56,7 +56,7 @@ function loginUser(user_mail, user_password) {
 
 function deleteUserById(id) {
   return new Promise((resolve, reject) => {
-    const query = "DELETE FROM Users WHERE id = $1;"
+    const query = "DELETE FROM Users WHERE user_id = $1;"
     connectionString.query(query, [id], (error) => {
       if (error) reject(error)
       else resolve()
@@ -64,11 +64,11 @@ function deleteUserById(id) {
   })
 }
 
-function updateUser(id, { user_name, user_email }) {
+function updateUser(id, { user_name, user_mail }) {
   return new Promise((resolve, reject) => {
-    const values = [user_name, user_email, id]
+    const values = [user_name, user_mail, id]
     const query =
-      "UPDATE Users SET user_name = $1, user_email = $2 WHERE id = $3 RETURNING *;"
+      "UPDATE Users SET user_name = $1, user_mail = $2 WHERE user_id = $3 RETURNING *;"
     connectionString.query(query, values, (error, results) => {
       if (error) reject(error)
       else resolve(results.rows[0])

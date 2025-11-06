@@ -27,6 +27,8 @@ function getUsersApplications() {
     FROM Applications
     INNER JOIN Users ON Applications.user_id = Users.user_id
     INNER JOIN Job_Posts ON Applications.job_id = Job_Posts.job_id
+    INNER JOIN Users ON Applications.user_experience = Users.user_experience
+    INNER JOIN Users ON Applications.user_education = Users.user_education
     `
     connectionString.query(query, (err, rows) => {
       if (err) reject(err)
@@ -35,8 +37,21 @@ function getUsersApplications() {
   })
 }
 
+function sendApplication({ user_id, job_id, user_experience, user_education }) {
+  return new Promise((resolve, reject) => {
+    const values = [user_id, job_id, user_experience, user_education]
+    const query =
+      "INSERT INTO Applications(user_id, job_id, user_experience, user_education) VALUES ($1, $2, $3, $4) "
+    connectionString.query(query, values, (err, rows) => {
+      if (err) reject(err)
+      else resolve(rows[0])
+    })
+  })
+}
+
 module.exports = {
   getApplications,
   getApplicationById,
   getUsersApplications,
+  sendApplication,
 }

@@ -34,3 +34,26 @@ exports.getUsersApplications = async (req, res) => {
     })
   }
 }
+
+exports.sendApplication = async (req, res) => {
+  const { user_id, job_id, user_experience, user_education } = req.body
+  try {
+    const newApplication = await applicationsServices.sendApplication({
+      user_id,
+      job_id,
+      user_experience,
+      user_education,
+    })
+    return res.status(201).json({
+      success: true,
+      data: newApplication,
+      application_id: newApplication.application_id,
+      message: "Successfully sent an application",
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: "Sending the application",
+    })
+    console.error(error)
+  }
+}

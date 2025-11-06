@@ -2,6 +2,8 @@ CREATE TABLE Applications (
     application_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES Users(user_id),
     job_id INTEGER REFERENCES Job_Posts(job_id),
+    user_experience text, 
+    user_education text,
     status VARCHAR(255) DEFAULT 'Pending' NOT NULL,
     application_date DATE DEFAULT CURRENT_DATE
 );
