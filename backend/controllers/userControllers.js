@@ -83,3 +83,16 @@ exports.updateUser = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+
+exports.updateUserExperience = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { user_experience } = req.body
+    const updated = await userServices.updateUserExperience(id, {
+      user_experience,
+    })
+    res.json({ message: updated })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
