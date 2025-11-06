@@ -13,7 +13,7 @@ function getAllUsers() {
 
 function getUserById(id) {
   return new Promise((resolve, reject) => {
-    const query = "SELECT * FROM Users WHERE id = $1;"
+    const query = "SELECT * FROM Users WHERE user_id = $1;"
     connectionString.query(query, [id], (error, results) => {
       if (error) reject(error)
       else resolve(results.rows[0])
