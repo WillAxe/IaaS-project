@@ -32,6 +32,69 @@
 
 .job-postings {
   display: flex;
-  background-color: #feefee;
+  background-color: #f9f9f9;
   flex-direction: column;
+  gap: 1.5rem;
+  max-height: 75vh;
+  overflow-y: auto;
+  padding: 1rem;
+  scrollbar-width: thin;
+}
+
+.post {
+  background: #fbfbfb;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.post:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.job-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #222;
+}
+
+.job-company {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.3rem;
+}
+
+.job-role {
+  color: #777;
+  margin-bottom: 0.8rem;
+}
+
+.job-description {
+  color: #444;
+  line-height: 1.5;
+  margin-bottom: 0.8rem;
+}
+
+.job-date {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.apply-button {
+  background-color: #cae3ff;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.apply-button:hover {
+  background-color: #e8f2fe;
 }
