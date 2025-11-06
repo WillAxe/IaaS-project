@@ -76,10 +76,11 @@ function updateUser(id, { user_name, user_email }) {
   });
 }
 
-function updateUserExperience(id, { experience }) {
+function updateUserExperience(id, { user_experience }) {
   return new Promise((resolve, reject) => {
-    const query = "UPDATE Users SET experience = $1 WHERE id = $2 RETURNING *;";
-    connectionString.query(query, [experience, id], (error, results) => {
+    const query =
+      "UPDATE Users SET user_experience = $1 WHERE user_id = $2 RETURNING *;";
+    connectionString.query(query, [user_experience, id], (error, results) => {
       if (error) reject(error);
       else resolve(results.rows[0]);
     });

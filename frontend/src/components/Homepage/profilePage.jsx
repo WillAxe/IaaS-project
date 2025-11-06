@@ -4,7 +4,7 @@ function ProfilePage() {
   const userId = localStorage.getItem("userId");
    const [experiences, setExperiences] = useState(() => {
     const savedExperiences = localStorage.getItem("experiences");
-    return savedExperiences ? JSON.parse(savedExperiences) : [];
+    return savedExperiences ? JSON.parse(savedExperiences): []
   });
   
   const [form, setForm] = useState({
@@ -55,11 +55,12 @@ function ProfilePage() {
      const updatedExperiences = [...experiences, form];
      setExperiences(updatedExperiences);
      setForm({ company: "", title: "", years: "" });
+
     try {
-      await fetch(`http://localhost:3000/jobmatch/user/${userId}/experience`, {
+      await fetch(`http://localhost:3000/jobmatch/user/experience/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ experience: updatedExperiences }),
+        body: JSON.stringify({ user_experience: updatedExperiences }),
       });
     } catch (error) {
       console.error("Kunde inte uppdatera erfarenheter i databasen:", error);

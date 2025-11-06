@@ -87,9 +87,9 @@ exports.updateUser = async (req, res) => {
 exports.updateUserExperience = async (req, res) => {
   try {
     const { id } = req.params;
-    const { experience } = req.body;
+    const { user_experience } = req.body;
     const updated = await userServices.updateUserExperience(id, {
-      experience,
+      user_experience,
     });
     res.json({ message: updated });
   } catch (error) {
