@@ -41,10 +41,10 @@ function sendApplication({ user_id, job_id, user_experience, user_education }) {
   return new Promise((resolve, reject) => {
     const values = [user_id, job_id, user_experience, user_education]
     const query =
-      "INSERT INTO Applications(user_id, job_id, user_experience, user_education) VALUES ($1, $2, $3, $4) "
+      "INSERT INTO Applications(user_id, job_id, user_experience, user_education) VALUES ($1, $2, $3, $4) RETURNING *;"
     connectionString.query(query, values, (err, rows) => {
       if (err) reject(err)
-      else resolve(rows[0])
+      else resolve(rows.rows[0])
     })
   })
 }
