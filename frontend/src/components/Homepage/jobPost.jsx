@@ -10,12 +10,6 @@ function JobPost() {
 
   const userId = localStorage.getItem("userId")
 
-  const [formData, setFormData] = useState({
-    user_id: userId,
-    job_id: jobid,
-    userExp: userExp.user_experience,
-    userEd: userEd.user_education,
-  })
   useEffect(() => {
     fetch(`/jobmatch/jobpost/${jobid}`)
       .then((response) => response.json())
@@ -30,37 +24,30 @@ function JobPost() {
       .then((response) => response.json())
       .then((result) => {
         // console.log(result)
-        setUserExp(result.user)
-        setUserEd(result.user)
+        setUserExp(result.user?.user_experience ?? "")
+        setUserEd(result.user?.user_education ?? "")
       })
   }, [userId])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(formData)
 
+    const payload = {
+      user_id: userId,
+      job_id: jobid,
+      user_experience: userExp ?? "",
+      user_education: userEd ?? "",
+    }
+    console.log(payload)
     try {
-      const payLoad = {
-        user_id: formData.user_id,
-        job_id: formData.job_id,
-        user_experience: formData.userExp,
-        user_education: formData.userEd,
-      }
-
       const response = await fetch(`/jobmatch/applications`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payLoad),
+        body: JSON.stringify(payload),
       })
       if (response.ok) {
         const data = await response.json()
-        console.log(data.application)
-        setFormData({
-          user_id: userId,
-          job_id: jobid,
-          userExp: userExp.user_experience,
-          userEd: userEd.user_education,
-        })
+        console.log(data)
         navigate(`/homePage/${userId}`)
       }
     } catch (error) {
@@ -78,12 +65,29 @@ function JobPost() {
             <p>{`${jobPost.job_description}`}</p>
             <div>
               <p>Dina erfarenheter:</p>
-              <ul>{`${userExp.user_experience}`}</ul>
+              <p>{`${userExp}`}</p>
+              {/* {Array.isArray(userExp) ? (
+                <ul>
+                  {userExp.map((exp, i) => (
+                    <li key={i}>
+                      {typeof exp === "object"
+                        ? `${exp.company ?? ""} - ${exp.title ?? ""} (${
+                            exp.years ?? ""
+                          })`
+                        : exp}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <ul>
+                  <li>{userExp}</li>
+                </ul>
+              )} */}
             </div>
             <div>
               <p>Utbildning</p>
               <ul>
-                <li>{`${userEd.user_education}`}</li>
+                <li>{userEd}</li>
               </ul>
             </div>
             <button type="submit">Skicka ansökan</button>
