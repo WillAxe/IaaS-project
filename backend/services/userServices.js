@@ -78,7 +78,7 @@ function updateUser(id, { user_name, user_mail }) {
 
 function updateUserExperience(id, { user_experience }) {
   return new Promise((resolve, reject) => {
-    // make sure that the data is stored correctly
+    // make sure that the data is stored correctly so frontend can map the experiences
     const experienceJSON = JSON.stringify(user_experience)
     const query =
       "UPDATE Users SET user_experience = $1 WHERE user_id = $2 RETURNING *;"
