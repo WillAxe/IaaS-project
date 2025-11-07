@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
+import "./styles/ProfilePage.css" 
 
 function ProfilePage() {
   const userId = localStorage.getItem("userId")
   const [experiences, setExperiences] = useState(() => {
-    const savedExperiences = localStorage.getItem("experiences")
+    const savedExperiences = localStorage.getItem(`experiences_${userId}`)
     return savedExperiences ? JSON.parse(savedExperiences) : []
   })
 
@@ -27,7 +28,10 @@ function ProfilePage() {
               ? JSON.parse(data.user.user_experience)
               : data.user.user_experience
           setExperiences(parsedExperiences)
-          localStorage.setItem("experiences", JSON.stringify(parsedExperiences))
+          localStorage.setItem(
+            `experiences_${userId}`,
+            JSON.stringify(parsedExperiences)
+          )
         }
       } catch (error) {
         console.error("Fel vid hämtning av erfarenheter:", error)
@@ -37,16 +41,10 @@ function ProfilePage() {
     fetchExperiences()
   }, [userId])
 
-  // useEffect(() => {
-  //   const savedExperiences = localStorage.getItem("experiences");
-  //   if (savedExperiences) {
-  //     setExperiences(JSON.parse(savedExperiences));
-  //   };
-  // }, []);
-
   useEffect(() => {
-    localStorage.setItem("experiences", JSON.stringify(experiences))
-  }, [experiences])
+    if (!userId) return
+    localStorage.setItem(`experiences_${userId}`, JSON.stringify(experiences))
+  }, [experiences, userId])
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -70,43 +68,55 @@ function ProfilePage() {
   }
 
   return (
-    <div style={{ maxWidth: 600, margin: "2rem auto", fontFamily: "Arial" }}>
-      <h1>Min Profil</h1>
-      <h2>Lägg till Jobberfarenhet</h2>
+    <div className="profile-container">
+      <h1 className="profile-title">Min Profil</h1>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <input
-          name="company"
-          placeholder="Företag"
-          value={form.company}
-          onChange={handleChange}
-          style={{ marginRight: "0.5rem" }}
-        />
-        <input
-          name="title"
-          placeholder="Jobbtitel"
-          value={form.title}
-          onChange={handleChange}
-          style={{ marginRight: "0.5rem" }}
-        />
-        <input
-          name="years"
-          placeholder="År (t.ex. 2020-2023)"
-          value={form.years}
-          onChange={handleChange}
-          style={{ marginRight: "0.5rem" }}
-        />
-        <button onClick={addExperience}>Lägg till</button>
+      <div className="form-card">
+        <h2 className="form-title">Lägg till Jobberfarenhet</h2>
+        <div className="form-fields">
+          <input
+            name="company"
+            placeholder="Företag"
+            value={form.company}
+            onChange={handleChange}
+            className="input-field"
+          />
+          <input
+            name="title"
+            placeholder="Jobbtitel"
+            value={form.title}
+            onChange={handleChange}
+            className="input-field"
+          />
+          <input
+            name="years"
+            placeholder="År (t.ex. 2020-2023)"
+            value={form.years}
+            onChange={handleChange}
+            className="input-field"
+          />
+          <button onClick={addExperience} className="add-button">
+            Lägg till
+          </button>
+        </div>
       </div>
 
-      <h3>Mina erfarenheter</h3>
-      <ul>
-        {experiences.map((exp, i) => (
-          <li key={i}>
-            <strong>{exp.company}</strong> – {exp.title} ({exp.years})
-          </li>
-        ))}
-      </ul>
+      <div className="experience-section">
+        <h3 className="section-title">Mina erfarenheter</h3>
+        <div className="experience-list">
+          {experiences.length === 0 ? (
+            <p className="no-exp">Inga erfarenheter tillagda ännu.</p>
+          ) : (
+            experiences.map((exp, i) => (
+              <div key={i} className="experience-card">
+                <div className="exp-company">{exp.company}</div>
+                <div className="exp-title">{exp.title}</div>
+                <div className="exp-years">{exp.years}</div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
     </div>
   )
 }
