@@ -1,39 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 
 function ProfilePage() {
-  const userId = localStorage.getItem("userId");
-   const [experiences, setExperiences] = useState(() => {
-    const savedExperiences = localStorage.getItem("experiences");
-    return savedExperiences ? JSON.parse(savedExperiences): []
-  });
-  
+  const userId = localStorage.getItem("userId")
+  const [experiences, setExperiences] = useState(() => {
+    const savedExperiences = localStorage.getItem("experiences")
+    return savedExperiences ? JSON.parse(savedExperiences) : []
+  })
+
   const [form, setForm] = useState({
     company: "",
     title: "",
     years: "",
-  });
+  })
 
-  
-  
   useEffect(() => {
-    if (!userId) return; 
+    if (!userId) return
 
     const fetchExperiences = async () => {
       try {
-        const res = await fetch(`/jobmatch/user/${userId}`);
-        const data = await res.json();
+        const res = await fetch(`/jobmatch/user/${userId}`)
+        const data = await res.json()
 
         if (data.user?.user_experience) {
-          setExperiences(data.user.user_experience); 
-          localStorage.setItem("experiences", JSON.stringify(data.user.user_experience));
+          const parsedExperiences =
+            typeof data.user.user_experience === "string"
+              ? JSON.parse(data.user.user_experience)
+              : data.user.user_experience
+          setExperiences(parsedExperiences)
+          localStorage.setItem("experiences", JSON.stringify(parsedExperiences))
         }
       } catch (error) {
-        console.error("Fel vid hämtning av erfarenheter:", error);
+        console.error("Fel vid hämtning av erfarenheter:", error)
       }
-    };
+    }
 
-    fetchExperiences();
-  }, [userId]);
+    fetchExperiences()
+  }, [userId])
 
   // useEffect(() => {
   //   const savedExperiences = localStorage.getItem("experiences");
@@ -43,31 +45,29 @@ function ProfilePage() {
   // }, []);
 
   useEffect(() => {
-    localStorage.setItem("experiences", JSON.stringify(experiences));
-  }, [experiences]);
+    localStorage.setItem("experiences", JSON.stringify(experiences))
+  }, [experiences])
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
 
-  const addExperience = async() => {
-    if (!form.company || !form.title || !form.years) return;
-     const updatedExperiences = [...experiences, form];
-     setExperiences(updatedExperiences);
-     setForm({ company: "", title: "", years: "" });
+  const addExperience = async () => {
+    if (!form.company || !form.title || !form.years) return
+    const updatedExperiences = [...experiences, form]
+    setExperiences(updatedExperiences)
+    setForm({ company: "", title: "", years: "" })
 
     try {
       await fetch(`http://localhost:3000/jobmatch/user/experience/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_experience: updatedExperiences }),
-      });
+      })
     } catch (error) {
-      console.error("Kunde inte uppdatera erfarenheter i databasen:", error);
+      console.error("Kunde inte uppdatera erfarenheter i databasen:", error)
     }
-  };
-
-  
+  }
 
   return (
     <div style={{ maxWidth: 600, margin: "2rem auto", fontFamily: "Arial" }}>
@@ -108,7 +108,7 @@ function ProfilePage() {
         ))}
       </ul>
     </div>
-  );
+  )
 }
 
-export default ProfilePage;
+export default ProfilePage
