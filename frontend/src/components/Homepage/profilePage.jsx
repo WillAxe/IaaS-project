@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import "./styles/ProfilePage.css" 
 
+
 function ProfilePage() {
   const userId = localStorage.getItem("userId")
   const [experiences, setExperiences] = useState(() => {
@@ -8,16 +9,27 @@ function ProfilePage() {
     return savedExperiences ? JSON.parse(savedExperiences) : []
   })
 
-  const [form, setForm] = useState({
+  const[educations, setEducations] = useState(() => {
+    const savedEducations = localStorage.getItem(`educations_${userId}`)
+    return savedEducations ? JSON.parse(savedEducations) : []
+  })
+
+  const [formExperience, setFormExperience] = useState({
     company: "",
     title: "",
+    years: "",
+  })
+
+  const [formEducation, setFormEducation] = useState({
+    school: "",
+    degree: "",
     years: "",
   })
 
   useEffect(() => {
     if (!userId) return
 
-    const fetchExperiences = async () => {
+    const fetchUserData = async () => {
       try {
         const res = await fetch(`/jobmatch/user/${userId}`)
         const data = await res.json()
@@ -33,12 +45,24 @@ function ProfilePage() {
             JSON.stringify(parsedExperiences)
           )
         }
+        
+        if (data.user?.user_education) {
+          const parsedEducations =
+          typeof data.user.user_education === "string"
+          ? JSON.parse(data.user.user_education)
+          : data.user.user_education
+          setEducations(parsedEducations)
+          localStorage.setItem(
+            `educations_${userId}`,
+            JSON.stringify(parsedEducations)
+          )
+        }
       } catch (error) {
         console.error("Fel vid hämtning av erfarenheter:", error)
       }
     }
 
-    fetchExperiences()
+    fetchUserData()
   }, [userId])
 
   useEffect(() => {
@@ -46,15 +70,24 @@ function ProfilePage() {
     localStorage.setItem(`experiences_${userId}`, JSON.stringify(experiences))
   }, [experiences, userId])
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
+  const handleExperienceChange = (e) => {
+    setFormExperience({ ...formExperience, [e.target.name]: e.target.value })
+  }
+
+  useEffect(() => {
+    if (!userId) return
+    localStorage.setItem(`educations_${userId}`, JSON.stringify(educations))
+  }, [educations, userId])
+
+  const handleEducationChange = (e) => {
+    setFormEducation({ ...formEducation, [e.target.name]: e.target.value })
   }
 
   const addExperience = async () => {
-    if (!form.company || !form.title || !form.years) return
-    const updatedExperiences = [...experiences, form]
+    if (!formExperience.company || !formExperience.title || !formExperience.years) return
+    const updatedExperiences = [...experiences, formExperience]
     setExperiences(updatedExperiences)
-    setForm({ company: "", title: "", years: "" })
+    setFormExperience({ company: "", title: "", years: "" })
 
     try {
       await fetch(`http://localhost:3000/jobmatch/user/experience/${userId}`, {
@@ -67,32 +100,47 @@ function ProfilePage() {
     }
   }
 
+  const addEducation = async () => {
+    if (!formEducation.school || !formEducation.degree || !formEducation.years) return
+    const updatedEducations = [...educations, formEducation]
+    setEducations(updatedEducations)
+    setFormEducation({ school: "", degree: "", years: "" })
+    try { 
+      await fetch(`http://localhost:3000/jobmatch/user/education/${userId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_education: updatedEducations }),
+      })
+    } catch (error) {
+      console.error("Kunde inte uppdatera utbildningar i databasen:", error)
+    }
+  }
+
   return (
     <div className="profile-container">
       <h1 className="profile-title">Min Profil</h1>
-
       <div className="form-card">
         <h2 className="form-title">Lägg till Jobberfarenhet</h2>
         <div className="form-fields">
           <input
             name="company"
             placeholder="Företag"
-            value={form.company}
-            onChange={handleChange}
+            value={formExperience.company}
+            onChange={handleExperienceChange}
             className="input-field"
           />
           <input
             name="title"
             placeholder="Jobbtitel"
-            value={form.title}
-            onChange={handleChange}
+            value={formExperience.title}
+            onChange={handleExperienceChange}
             className="input-field"
           />
           <input
             name="years"
-            placeholder="År (t.ex. 2020-2023)"
-            value={form.years}
-            onChange={handleChange}
+            placeholder="År (t.ex. 2020–2023)"
+            value={formExperience.years}
+            onChange={handleExperienceChange}
             className="input-field"
           />
           <button onClick={addExperience} className="add-button">
@@ -112,6 +160,54 @@ function ProfilePage() {
                 <div className="exp-company">{exp.company}</div>
                 <div className="exp-title">{exp.title}</div>
                 <div className="exp-years">{exp.years}</div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      
+      <div className="form-card">
+        <h2 className="form-title">Lägg till Utbildning</h2>
+        <div className="form-fields">
+          <input
+            name="school"
+            placeholder="Skola / Universitet"
+            value={formEducation.school}
+            onChange={handleEducationChange}
+            className="input-field"
+          />
+          <input
+            name="degree"
+            placeholder="Examen / Program"
+            value={formEducation.degree}
+            onChange={handleEducationChange}
+            className="input-field"
+          />
+          <input
+            name="years"
+            placeholder="År (t.ex. 2018–2021)"
+            value={formEducation.years}
+            onChange={handleEducationChange}
+            className="input-field"
+          />
+          <button onClick={addEducation} className="add-button">
+            Lägg till
+          </button>
+        </div>
+      </div>
+
+      <div className="experience-section">
+        <h3 className="section-title">Mina utbildning</h3>
+        <div className="experience-list">
+          {educations.length === 0 ? (
+            <p className="no-exp">Ingen utbildning tillagd ännu.</p>
+          ) : (
+            educations.map((edu, i) => (
+              <div key={i} className="experience-card">
+                <div className="exp-company">{edu.school}</div>
+                <div className="exp-title">{edu.degree}</div>
+                <div className="exp-years">{edu.years}</div>
               </div>
             ))
           )}
