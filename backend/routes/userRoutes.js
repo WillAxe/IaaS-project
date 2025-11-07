@@ -15,4 +15,6 @@ router.put("/user/:id", userController.updateUser)
 
 router.put("/user/experience/:id", userController.updateUserExperience)
 
+router.put("/user/education/:id", userController.updateUserEducation)
+
 module.exports = router

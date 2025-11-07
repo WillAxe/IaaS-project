@@ -89,6 +89,18 @@ function updateUserExperience(id, { user_experience }) {
   })
 }
 
+function updateUserEducation(id, { user_education }) {
+  return new Promise((resolve, reject) => {
+    const educationJSON = JSON.stringify(user_education)
+    const query =
+      "UPDATE Users SET user_education = $1 WHERE user_id = $2 RETURNING *;"
+    connectionString.query(query, [educationJSON, id], (error, results) => {
+      if (error) reject(error)
+      else resolve(results.rows[0])
+    })
+  })
+}
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -97,4 +109,5 @@ module.exports = {
   deleteUserById,
   updateUser,
   updateUserExperience,
+  updateUserEducation,
 }
