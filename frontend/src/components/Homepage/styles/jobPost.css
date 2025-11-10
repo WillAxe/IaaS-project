@@ -1,0 +1,63 @@
+.main {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  font-family: Arial sans-serif;
+}
+
+.container {
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0 0 0 0.1);
+  max-width: 700px;
+  width: 100%;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.page-header {
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.company {
+  color: "555";
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.about-header {
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.3rem;
+}
+
+.about-description {
+  margin-top: 0.5rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+.experiences {
+  color: #333;
+}
+
+.education {
+  color: #333;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}

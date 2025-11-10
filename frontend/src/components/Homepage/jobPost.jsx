@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import "./styles/jobPost.css"
 function JobPost() {
   const navigate = useNavigate()
   const { jobid } = useParams()
@@ -57,42 +58,62 @@ function JobPost() {
 
   return (
     <>
-      <main>
-        <h1>{`${jobPost.job_title}`}</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <h2>Om jobbet</h2>
-            <p>{`${jobPost.job_description}`}</p>
-            <div>
-              <p>Dina erfarenheter:</p>
-              <p>{`${userExp}`}</p>
-              {/* {Array.isArray(userExp) ? (
-                <ul>
-                  {userExp.map((exp, i) => (
-                    <li key={i}>
-                      {typeof exp === "object"
-                        ? `${exp.company ?? ""} - ${exp.title ?? ""} (${
-                            exp.years ?? ""
-                          })`
-                        : exp}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <ul>
-                  <li>{userExp}</li>
-                </ul>
-              )} */}
-            </div>
-            <div>
-              <p>Utbildning</p>
+      <main className="main">
+        <div className="container">
+          <h1 className="page-header">{`${jobPost.job_title}`}</h1>
+          <p className="company">
+            <strong>{`${jobPost.company_name}`}</strong>
+          </p>
+          <section className="about-sectipn">
+            <h2 className="about-header">Om jobbet</h2>
+            <p className="about-description">{`${jobPost.job_description}`}</p>
+          </section>
+          <section>
+            <h3 className="experiences">Dina erfarenheter</h3>
+            {Array.isArray(userExp) ? (
+              <ul>
+                {userExp.map((exp, i) => (
+                  <li key={i}>
+                    {typeof exp === "object"
+                      ? `${exp.company ?? ""} - ${exp.title ?? ""} (${
+                          exp.years ?? ""
+                        })`
+                      : exp}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul>
+                <li>{userExp}</li>
+              </ul>
+            )}
+          </section>
+          <section>
+            <h3 className="education">Utbildning:</h3>
+            {Array.isArray(userEd) ? (
+              <ul>
+                {userEd.map((ed, i) => (
+                  <li key={i}>
+                    {typeof ed === "object"
+                      ? `${ed.school ?? ""}- ${ed.degree ?? ""} (${
+                          ed.years ?? ""
+                        })`
+                      : ed}
+                  </li>
+                ))}
+              </ul>
+            ) : (
               <ul>
                 <li>{userEd}</li>
               </ul>
-            </div>
-            <button type="submit">Skicka ansökan</button>
-          </div>
-        </form>
+            )}
+          </section>
+          <form onSubmit={handleSubmit}>
+            <button className="submit-btn" type="submit">
+              Skicka ansökan
+            </button>
+          </form>
+        </div>
       </main>
     </>
   )
