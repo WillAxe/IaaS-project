@@ -1,6 +1,7 @@
 import React from "react"
 import { useState, _useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 function CreateAccount() {
   const navigate = useNavigate()
@@ -8,6 +9,7 @@ function CreateAccount() {
     name: "",
     email: "",
     password: "",
+    checkbox: false,
   })
 
   const handleChange = (e) => {
@@ -89,6 +91,27 @@ function CreateAccount() {
               required
             />
           </label>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="checkbox"
+                checked={formData.checkbox}
+                onChange={(e) =>
+                  setFormData({ ...formData, checkbox: e.target.checked })
+                }
+                required
+              />
+              Jag godkänner{" "}
+              <Link to="/privacy-policy" target="_blank">
+                intergritetspolicyn
+              </Link>{" "}
+              och{" "}
+              <Link to="/terms-of-service" target="_blank">
+                Användarvillkoren
+              </Link>
+            </label>
+          </div>
           <div>
             <button type="submit">Skapa konto</button>
           </div>
