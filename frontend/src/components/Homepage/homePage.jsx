@@ -96,9 +96,7 @@ function HomePage() {
               <p className="job-description">{`${jobPost.job_description}`}</p>
               <p className="post-date">{`${jobPost.posted_date}`}</p>
 
-              <button className="apply-button">
-                <LinkTo body={jobPost} bodies="jobpost"></LinkTo>
-              </button>
+              <LinkTo body={jobPost} bodies="jobpost"></LinkTo>
             </div>
           ))}
         </section>

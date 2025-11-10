@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import "./styles/homePage.css"
 
 const linkStyle = {
   textDecoration: "none",
@@ -12,7 +13,7 @@ function LinkTo(props) {
   return (
     <>
       <Link style={linkStyle} to={`/${props.bodies}/${jobId}`}>
-        Ansök
+        <button className="apply-button">Ansök</button>
       </Link>
     </>
   )
