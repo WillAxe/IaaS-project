@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import "./styles/ProfilePage.css" 
+import { Link } from "react-router-dom"
 
 
 function ProfilePage() {
@@ -182,6 +183,11 @@ const deleteEducation = async (index) => {
 
   return (
     <div className="profile-container">
+      <div>
+        <Link to="/account-settings" className="manage-account-button">
+        Hantera konto
+        </Link>
+        </div>
       <h1 className="profile-title">Min Profil</h1>
       <div className="form-card">
         <h2 className="form-title">Lägg till Jobberfarenhet</h2>
@@ -292,6 +298,7 @@ const deleteEducation = async (index) => {
                   setEditingEducationIndex(i)
                 }} className="edit-button">Redigera</button>
                 </div>
+
               </div>
             ))
           )}

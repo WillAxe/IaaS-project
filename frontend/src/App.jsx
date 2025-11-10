@@ -5,6 +5,7 @@ import HomePage from "./components/Homepage/homePage"
 import MyApplications from "./components/Homepage/myApplications"
 import ProfilePage from "./components/Homepage/profilePage"
 import JobPost from "./components/Homepage/jobPost"
+import AccountSettings from "./components/Homepage/AccountSettings"
 
 import {
   createHashRouter,
@@ -23,6 +24,7 @@ function App() {
         { element: <MyApplications />, path: "/applications/:userid" },
         { element: <ProfilePage />, path: "/profilePage/:userid" },
         { element: <JobPost />, path: "/jobpost/:jobid" },
+        { element: <AccountSettings />, path: "/account-settings" },
       ],
       element: (
         <>
