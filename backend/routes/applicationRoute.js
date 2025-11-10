@@ -7,7 +7,11 @@ router.get(
   "/applications/:applicationid",
   applicationController.getApplicationById
 )
-router.get("/applicationuser", applicationController.getUsersApplications)
+// Get applications for a specific user (by user id)
+router.get(
+  "/applications/user/:userid",
+  applicationController.getUsersApplications
+)
 
 router.post("/applications", applicationController.sendApplication)
 

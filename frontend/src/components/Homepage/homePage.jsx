@@ -84,7 +84,9 @@ function HomePage() {
           </div>
         </nav>
       </div>
-
+      <div>
+        <Link to={`/applications/user/${userId}`}>My Applications</Link>
+      </div>
       <main>
         <section className="job-postings">
           {/* let each post be a specfiic body and link to a subpage to /jobpost*/}

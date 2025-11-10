@@ -22,7 +22,7 @@ function App() {
         { element: <LoginPage />, path: "/" },
         { element: <CreateAccount />, path: "/createAccount" },
         { element: <HomePage />, path: "/homePage/:userid" },
-        { element: <MyApplications />, path: "/applications/:userid" },
+        { element: <MyApplications />, path: "/applications/user/:userid" },
         { element: <ProfilePage />, path: "/profilePage/:userid" },
         { element: <JobPost />, path: "/jobpost/:jobid" },
         { element: <PrivacyPolicy />, path: "/privacy-policy" },
