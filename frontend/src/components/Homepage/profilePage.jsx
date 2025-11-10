@@ -4,6 +4,10 @@ import "./styles/ProfilePage.css"
 
 function ProfilePage() {
   const userId = localStorage.getItem("userId")
+
+  const [editingExperienceIndex, setEditingExperienceIndex] = useState(null)
+  const [editingEducationIndex, setEditingEducationIndex] = useState(null)
+  
   const [experiences, setExperiences] = useState(() => {
     const savedExperiences = localStorage.getItem(`experiences_${userId}`)
     return savedExperiences ? JSON.parse(savedExperiences) : []
@@ -84,37 +88,97 @@ function ProfilePage() {
   }
 
   const addExperience = async () => {
-    if (!formExperience.company || !formExperience.title || !formExperience.years) return
-    const updatedExperiences = [...experiences, formExperience]
-    setExperiences(updatedExperiences)
-    setFormExperience({ company: "", title: "", years: "" })
+  if (!formExperience.company || !formExperience.title || !formExperience.years) return
 
-    try {
-      await fetch(`http://localhost:3000/jobmatch/user/experience/${userId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_experience: updatedExperiences }),
-      })
-    } catch (error) {
-      console.error("Kunde inte uppdatera erfarenheter i databasen:", error)
-    }
+  let updatedExperiences
+
+  
+  if (editingExperienceIndex !== null) {
+    updatedExperiences = experiences.map((exp, i) =>
+      i === editingExperienceIndex ? formExperience : exp
+    )
+    setEditingExperienceIndex(null)
+  } else {
+    updatedExperiences = [...experiences, formExperience]
   }
+
+  setExperiences(updatedExperiences)
+  setFormExperience({ company: "", title: "", years: "" })
+
+  try {
+    await fetch(`http://localhost:3000/jobmatch/user/experience/${userId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_experience: updatedExperiences }),
+    })
+  } catch (error) {
+    console.error("Kunde inte uppdatera erfarenheter i databasen:", error)
+  }
+}
+
 
   const addEducation = async () => {
-    if (!formEducation.school || !formEducation.degree || !formEducation.years) return
-    const updatedEducations = [...educations, formEducation]
-    setEducations(updatedEducations)
-    setFormEducation({ school: "", degree: "", years: "" })
-    try { 
-      await fetch(`http://localhost:3000/jobmatch/user/education/${userId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_education: updatedEducations }),
-      })
-    } catch (error) {
-      console.error("Kunde inte uppdatera utbildningar i databasen:", error)
-    }
+  if (!formEducation.school || !formEducation.degree || !formEducation.years) return
+
+  let updatedEducations
+
+  if (editingEducationIndex !== null) {
+    updatedEducations = educations.map((edu, i) =>
+      i === editingEducationIndex ? formEducation : edu
+    )
+    setEditingEducationIndex(null)
+  } else {
+    updatedEducations = [...educations, formEducation]
   }
+
+  setEducations(updatedEducations)
+  setFormEducation({ school: "", degree: "", years: "" })
+
+  try {
+    await fetch(`http://localhost:3000/jobmatch/user/education/${userId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_education: updatedEducations }),
+    })
+  } catch (error) {
+    console.error("Kunde inte uppdatera utbildningar i databasen:", error)
+  }
+}
+
+  
+const deleteExperience = async (index) => {
+  const updatedExperiences = experiences.filter((_, i) => i !== index)
+  setExperiences(updatedExperiences)
+  localStorage.setItem(`experiences_${userId}`, JSON.stringify(updatedExperiences))
+
+  try {
+    await fetch(`http://localhost:3000/jobmatch/user/experience/${userId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_experience: updatedExperiences }),
+    })
+  } catch (error) {
+    console.error("Kunde inte uppdatera erfarenheter i databasen:", error)
+  }
+}
+
+
+const deleteEducation = async (index) => {
+  const updatedEducations = educations.filter((_, i) => i !== index)
+  setEducations(updatedEducations)
+  localStorage.setItem(`educations_${userId}`, JSON.stringify(updatedEducations))
+
+  try {
+    await fetch(`http://localhost:3000/jobmatch/user/education/${userId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_education: updatedEducations }),
+    })
+  } catch (error) {
+    console.error("Kunde inte uppdatera utbildningar i databasen:", error)
+  }
+}
+
 
   return (
     <div className="profile-container">
@@ -144,7 +208,7 @@ function ProfilePage() {
             className="input-field"
           />
           <button onClick={addExperience} className="add-button">
-            Lägg till
+            {editingExperienceIndex !== null ? "Uppdatera Erfarenhet" : "Lägg till Erfarenhet"}
           </button>
         </div>
       </div>
@@ -160,6 +224,16 @@ function ProfilePage() {
                 <div className="exp-company">{exp.company}</div>
                 <div className="exp-title">{exp.title}</div>
                 <div className="exp-years">{exp.years}</div>
+                <div className="button-row">
+                <button
+                  onClick={() => deleteExperience(i)}
+                  className="delete-button"
+                >Ta bort</button>
+                <button onClick={()=>{
+                  setFormExperience(exp)
+                  setEditingExperienceIndex(i)
+                }}className="edit-button">Redigera</button>
+                </div>
               </div>
             ))
           )}
@@ -192,7 +266,7 @@ function ProfilePage() {
             className="input-field"
           />
           <button onClick={addEducation} className="add-button">
-            Lägg till
+            {editingEducationIndex !== null ? "Uppdatera" : "Lägg till Utbildning"}
           </button>
         </div>
       </div>
@@ -208,6 +282,16 @@ function ProfilePage() {
                 <div className="exp-company">{edu.school}</div>
                 <div className="exp-title">{edu.degree}</div>
                 <div className="exp-years">{edu.years}</div>
+                <div className="button-row">
+                <button
+                  onClick={() => deleteEducation(i)}
+                  className="delete-button"
+                >Ta bort</button> 
+                <button onClick={()=>{
+                  setFormEducation(edu)
+                  setEditingEducationIndex(i)
+                }} className="edit-button">Redigera</button>
+                </div>
               </div>
             ))
           )}
