@@ -1,19 +1,22 @@
+version: "3.9"
+
 services:
   backend:
-    build: backend
+    build: ./backend
     depends_on:
-    database:
-      condition: service_heatlhy
-  environment: -PGURI=postgres://postgres:secret@database/postgres
-  ports:
-    - "3000:3000"
+      database:
+        condition: service_healthy
+    environment:
+      - PGURI=postgres://postgres:secret@database/postgres
+    ports:
+      - "3000:3000"
 
-database:
-  environment:
-    - POSTGRES_PASSWORD=secret
-  healthcheck:
-    interval: 1s
-    test: "pg_isready --username=postgres"
-image: postgres
-volumes:
-  - ./data:/var/lib/postgresql
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=secret
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=postgres"]
+      interval: 1s
+    volumes:
+      - ./data:/var/lib/postgresql/data
