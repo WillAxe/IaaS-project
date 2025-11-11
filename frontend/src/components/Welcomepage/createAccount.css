@@ -1,0 +1,44 @@
+.create-account {
+  min-height: 100vh;
+  margin: 0;
+  width: 100vw;
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.form-section {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #333333;
+  border-radius: 12px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.form-style {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.input-field {
+  width: 95%;
+  margin: auto;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
