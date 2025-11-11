@@ -1,0 +1,59 @@
+.account-settings-container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.account-settings-container h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-form label {
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.input-field {
+  padding: 2px 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.save-button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.save-button:hover {
+  background-color: #1d4ed8;
+}
+
+.delete-account-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+.delete-account-button:hover {
+  background-color: #c0392b;
+}
