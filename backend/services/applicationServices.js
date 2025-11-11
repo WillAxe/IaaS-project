@@ -5,7 +5,7 @@ function getApplications() {
     const query = "SELECT * FROM applications;"
     connectionString.query(query, (err, rows) => {
       if (err) reject(err)
-      else resolve()
+      else resolve(rows.rows)
     })
   })
 }
@@ -20,17 +20,18 @@ function getApplicationById(id) {
   })
 }
 
-function getUsersApplications() {
+function getUsersApplications(userId) {
   return new Promise((resolve, reject) => {
+    // call the tables alias instead of the their full name for easier code and less charcatcters
     const query = `
-    SELECT Users.user_name, Job_Posts.job_title
-    FROM Applications
-    INNER JOIN Users ON Applications.user_id = Users.user_id
-    INNER JOIN Job_Posts ON Applications.job_id = Job_Posts.job_id
-    INNER JOIN Users ON Applications.user_experience = Users.user_experience
-    INNER JOIN Users ON Applications.user_education = Users.user_education
+      SELECT a.*, u.user_name, jp.job_title, status
+      FROM Applications a
+      INNER JOIN Users u ON a.user_id = u.user_id
+      INNER JOIN Job_Posts jp ON a.job_id = jp.job_id
+      WHERE a.user_id = $1
+      ORDER BY a.application_id DESC
     `
-    connectionString.query(query, (err, rows) => {
+    connectionString.query(query, [userId], (err, rows) => {
       if (err) reject(err)
       else resolve(rows.rows)
     })

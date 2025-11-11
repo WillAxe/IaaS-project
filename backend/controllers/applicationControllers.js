@@ -13,9 +13,11 @@ exports.getApplications = async (req, res) => {
 }
 
 exports.getApplicationById = async (req, res) => {
-  const { id } = req.params
+  const { applicationid } = req.params
   try {
-    const application = await applicationsServices.getApplicationById(id)
+    const application = await applicationsServices.getApplicationById(
+      applicationid
+    )
     res.json({ application })
   } catch (error) {
     res.status(500).json({
@@ -25,8 +27,11 @@ exports.getApplicationById = async (req, res) => {
 }
 
 exports.getUsersApplications = async (req, res) => {
+  const { userid } = req.params
   try {
-    const userApplications = await applicationsServices.getUsersApplications()
+    const userApplications = await applicationsServices.getUsersApplications(
+      userid
+    )
     res.json({ userApplications })
   } catch (error) {
     res.status(500).json({

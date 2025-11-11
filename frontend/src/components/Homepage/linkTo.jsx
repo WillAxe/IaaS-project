@@ -8,12 +8,19 @@ const linkStyle = {
 }
 
 // Send props for homePage to be able to send the job id as a prop so each job sends the user to the correct page
-function LinkTo(props) {
-  const jobId = props.body.job_id
+function LinkTo({ body, bodies }) {
+  const jobId = body.job_id
+  let buttonText = "Ansök"
+
+  if (body.status) {
+    buttonText = "Visa jobbannons"
+  } else if (bodies === "jobpost") {
+    buttonText = "Ansök"
+  }
   return (
     <>
-      <Link style={linkStyle} to={`/${props.bodies}/${jobId}`}>
-        <button className="apply-button">Ansök</button>
+      <Link style={linkStyle} to={`/${bodies}/${jobId}`}>
+        <button className="apply-button">{buttonText}</button>
       </Link>
     </>
   )

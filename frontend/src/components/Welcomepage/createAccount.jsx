@@ -2,6 +2,7 @@ import React from "react"
 import { useState, _useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
+import "./createAccount.css"
 
 function CreateAccount() {
   const navigate = useNavigate()
@@ -39,6 +40,7 @@ function CreateAccount() {
         const data = await response.json()
         console.log(data.user_id)
         let userId = data.user_id
+        localStorage.setItem("userId", userId)
         setFormData({ name: "", email: "", password: "" })
         navigate(`/homePage/${userId}`)
       } else {
@@ -58,66 +60,73 @@ function CreateAccount() {
   }
   return (
     <>
-      <h2>Skapa ditt konto</h2>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Namn:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            E-Post:
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Lösenord:
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <div>
-            <label>
+      <div className="create-account">
+        <h1>Skapa ditt konto</h1>
+        <div className="form-section">
+          <form className="form-style" onSubmit={handleSubmit}>
+            <label className="label">
+              Namn:
               <input
-                type="checkbox"
-                name="checkbox"
-                checked={formData.checkbox}
-                onChange={(e) =>
-                  setFormData({ ...formData, checkbox: e.target.checked })
-                }
+                className="input-field"
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 required
               />
-              Jag godkänner{" "}
-              <Link to="/privacy-policy" target="_blank">
-                intergritetspolicyn
-              </Link>{" "}
-              och{" "}
-              <Link to="/terms-of-service" target="_blank">
-                Användarvillkoren
-              </Link>
             </label>
-          </div>
-          <div>
-            <button type="submit">Skapa konto</button>
-          </div>
-        </form>
+            <label className="label">
+              E-Post:
+              <input
+                className="input-field"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label className="label">
+              Lösenord:
+              <input
+                className="input-field"
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  name="checkbox"
+                  checked={formData.checkbox}
+                  onChange={(e) =>
+                    setFormData({ ...formData, checkbox: e.target.checked })
+                  }
+                  required
+                />
+                Jag godkänner{" "}
+                <Link to="/privacy-policy" target="_blank">
+                  intergritetspolicyn
+                </Link>{" "}
+                och{" "}
+                <Link to="/terms-of-service" target="_blank">
+                  Användarvillkoren(avtalet)
+                </Link>
+              </label>
+            </div>
+            <div>
+              <button type="submit">Skapa konto</button>
+            </div>
+            <Link to="/#">Tillbaka till förra sidan</Link>
+          </form>
+        </div>
       </div>
     </>
   )
 }
+
 export default CreateAccount
