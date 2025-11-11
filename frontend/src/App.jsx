@@ -26,7 +26,7 @@ function App() {
         { element: <MyApplications />, path: "/applications/:userid" },
         { element: <ProfilePage />, path: "/profilePage/:userid" },
         { element: <JobPost />, path: "/jobpost/:jobid" },
-        { element: <AccountSettings />, path: "/account-settings" },
+        { element: <AccountSettings />, path: "/account-settings/:userid" },
         { element: <PrivacyPolicy />, path: "/privacy-policy" },
         { element: <TermsOfService />, path: "/terms-of-service" },
       ],

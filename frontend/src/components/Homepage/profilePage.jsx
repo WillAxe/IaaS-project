@@ -184,7 +184,7 @@ const deleteEducation = async (index) => {
   return (
     <div className="profile-container">
       <div>
-        <Link to="/account-settings" className="manage-account-button">
+        <Link to={`/account-settings/${userId}`} className="manage-account-button">
         Hantera konto
         </Link>
         </div>
