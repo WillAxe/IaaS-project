@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-// import "./styles/AccountSettings.css"
+import "./styles/AccountSettings.css"
 
 function AccountSettings() {
   const navigate = useNavigate()
@@ -83,6 +83,7 @@ function AccountSettings() {
         <label>Namn</label>
         <input
           name="user_name"
+          value={form.user_name}
           onChange={handleChange}
           className="input-field"
         />
@@ -90,6 +91,7 @@ function AccountSettings() {
         <label>E-post</label>
         <input
           name="user_mail"
+          value={form.user_mail}
           type="email"
           onChange={handleChange}
           className="input-field"
@@ -98,8 +100,8 @@ function AccountSettings() {
         <label>Lösenord</label>
         <input
           name="user_password"
-          type="password"
           value={form.user_password}
+          type="password"
           onChange={handleChange}
           className="input-field"
         />
