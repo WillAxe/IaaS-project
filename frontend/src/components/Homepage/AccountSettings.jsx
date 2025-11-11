@@ -21,7 +21,7 @@ function AccountSettings() {
         setForm({
           user_name: data.user.user_name || "",
           user_mail: data.user.user_mail || "",
-          user_password: "", 
+          user_password: data.user.user_password || "", 
         })
       } catch (error) {
         console.error("Kunde inte hämta användardata:", error)
