@@ -40,6 +40,7 @@ function CreateAccount() {
         const data = await response.json()
         console.log(data.user_id)
         let userId = data.user_id
+        localStorage.setItem("userId", userId)
         setFormData({ name: "", email: "", password: "" })
         navigate(`/homePage/${userId}`)
       } else {
