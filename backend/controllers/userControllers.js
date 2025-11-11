@@ -73,10 +73,11 @@ exports.deleteUserById = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params
-    const { user_name, user_mail } = req.body
+    const { user_name, user_mail, user_password } = req.body
     const updated = await userServices.updateUser(id, {
       user_name,
       user_mail,
+      user_password,
     })
     res.json({ message: updated })
   } catch (error) {
