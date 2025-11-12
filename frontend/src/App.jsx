@@ -6,7 +6,9 @@ import HomePage from "./components/Homepage/homePage"
 const MyApplications = lazy(() =>
   import("./components/Homepage/myApplications")
 )
-import ProfilePage from "./components/Homepage/profilePage"
+const ProfilePage = lazy(() =>
+  import("./components/Homepage/profilePage")
+)
 import JobPost from "./components/Homepage/jobPost"
 import AccountSettings from "./components/Homepage/AccountSettings"
 import PrivacyPolicy from "./privacyPolicy"
@@ -38,7 +40,11 @@ function App() {
           ),
           path: "/applications/user/:userid",
         },
-        { element: <ProfilePage />, path: "/profilePage/:userid" },
+        {element: (
+          <Suspense fallback={<>Laddar...</>}>
+            <ProfilePage />
+          </Suspense>
+        ), path: "/profilePage/:userid"},
         { element: <JobPost />, path: "/jobpost/:jobid" },
         { element: <AccountSettings />, path: "/account-settings/:userid" },
         { element: <PrivacyPolicy />, path: "/privacy-policy" },
