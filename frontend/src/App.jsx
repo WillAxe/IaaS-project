@@ -46,12 +46,7 @@ function App() {
       ],
       element: (
         <>
-          <nav>
-            <ul></ul>
-          </nav>
-          <main>
-            <Outlet></Outlet>
-          </main>
+          <Outlet></Outlet>
         </>
       ),
     },
