@@ -6,7 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/jobmatch": "http://localhost:3000",
+      "/jobmatch": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
     },
   },
 })
