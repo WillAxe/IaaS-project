@@ -1,5 +1,5 @@
 
-CREATE TABLE Job_Posts (
+CREATE TABLE job_posts (
     job_id SERIAL PRIMARY KEY,
     job_title VARCHAR(255) NOT NULL,
     job_role VARCHAR(255),

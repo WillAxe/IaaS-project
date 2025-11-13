@@ -38,7 +38,7 @@ function createUser({ user_name, user_password, user_mail }) {
 function loginUser(user_mail, user_password) {
   return new Promise((resolve, reject) => {
     const query =
-      "SELECT * FROM Users WHERE user_mail = $1 AND user_password = $2;"
+      "SELECT * FROM Users WHERE user_mail = $1 AND user_password = $2 RETURNING *; "
     connectionString.query(
       query,
       [user_mail, user_password],
@@ -69,14 +69,13 @@ function updateUser(id, { user_name, user_mail, user_password }) {
     const values = [user_name, user_mail, user_password, id]
     const query =
       "UPDATE Users SET user_name = $1, user_mail = $2, user_password = $3 WHERE user_id = $4 RETURNING *;"
-    console.log("SQL VALUES:", values) 
+    console.log("SQL VALUES:", values)
     connectionString.query(query, values, (error, results) => {
       if (error) reject(error)
       else resolve(results.rows[0])
     })
   })
 }
-
 
 function updateUserExperience(id, { user_experience }) {
   return new Promise((resolve, reject) => {
