@@ -15,13 +15,13 @@ function AccountSettings() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/jobmatch/user/${userId}`)
+        const res = await fetch(`/jobmatch/user/${userId}`)
         const data = await res.json()
         setUser(data.user)
         setForm({
           user_name: data.user.user_name || "",
           user_mail: data.user.user_mail || "",
-          user_password: data.user.user_password || "", 
+          user_password: data.user.user_password || "",
         })
       } catch (error) {
         console.error("Kunde inte hämta användardata:", error)
@@ -36,13 +36,13 @@ function AccountSettings() {
 
   const handleUpdate = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/jobmatch/user/${userId}`, {
+      const res = await fetch(`/jobmatch/user/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user_name: form.user_name,
           user_mail: form.user_mail,
-          user_password: form.user_password, 
+          user_password: form.user_password,
         }),
       })
       if (res.ok) {
@@ -58,7 +58,7 @@ function AccountSettings() {
   const handleDelete = async () => {
     if (!window.confirm("Är du säker på att du vill radera ditt konto?")) return
     try {
-      const res = await fetch(`http://localhost:3000/jobmatch/user/${userId}`, {
+      const res = await fetch(`/jobmatch/user/${userId}`, {
         method: "DELETE",
       })
       if (res.ok) {

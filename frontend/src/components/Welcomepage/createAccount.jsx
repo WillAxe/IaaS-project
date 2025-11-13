@@ -29,7 +29,7 @@ function CreateAccount() {
         user_password: formData.password,
       }
 
-      const response = await fetch("http://localhost:3000/jobmatch/users", {
+      const response = await fetch("/jobmatch/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
