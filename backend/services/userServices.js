@@ -36,6 +36,7 @@ function createUser({ user_name, user_password, user_mail }) {
 
 //Post call for when a existing user is loggin in and matching credentials with correct user mail and password
 function loginUser(user_mail, user_password) {
+  console.log(user_mail, user_password)
   return new Promise((resolve, reject) => {
     const query =
       "SELECT * FROM Users WHERE user_mail = $1 AND user_password = $2; "
