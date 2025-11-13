@@ -38,11 +38,12 @@ function createUser({ user_name, user_password, user_mail }) {
 function loginUser(user_mail, user_password) {
   return new Promise((resolve, reject) => {
     const query =
-      "SELECT * FROM Users WHERE user_mail = $1 AND user_password = $2 RETURNING *; "
+      "SELECT * FROM Users WHERE user_mail = $1 AND user_password = $2; "
     connectionString.query(
       query,
       [user_mail, user_password],
       (error, results) => {
+        console.log(results)
         if (error) reject(error)
         else if (results.rows.length === 0) {
           resolve()
